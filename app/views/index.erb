@@ -22,8 +22,10 @@
                 <ul class="comments">
                     <li>
                         <p>
+                            <% if false %>
                             <% post[:comments].each do |comment| %>
                               <%= comment[:username] %>: <%= comment[:text] %>
+                            <% end %>
                             <% end %>
                         </p>
                     </li>
