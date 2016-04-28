@@ -51,6 +51,33 @@ get '/logout' do
   redirect(to('/'))
 end
 
+get '/posts/new' do
+  @post = Post.new
+  erb(:"posts/new")
+end
+
+
+get '/posts/:id' do
+  @post = Post.find(params[:id])
+  erb :'posts/show'
+end
+
+post '/posts' do
+  photo_url = params[:photo_url]
+
+  # instantiate new Post
+  @post = Post.new({ photo_url: photo_url, user_id: current_user.id})
+
+  # if @post validates, save
+  if @post.save
+    redirect(to('/'))
+  else
+
+    # if it doesn't validate, print error messages
+    @post.errors.full_messages.inspect
+  end
+end
+
 helpers do
   def current_user
     User.find_by(id: session[:user_id])
